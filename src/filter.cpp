@@ -67,7 +67,7 @@ Mat convolve_rgb(Mat img, Mat ker, int ksize) {
 
 Mat convolve_gray(Mat img, Mat ker, int ksize) {
 
-    Mat outimg = Mat::zeros(img.size(), img.type());
+    Mat outimg = Mat::zeros(img.size(), CV_32F);
 
     // Kernel radius
     int kr = ksize / 2;
@@ -90,15 +90,13 @@ Mat convolve_gray(Mat img, Mat ker, int ksize) {
                     if (overflow) 
                         res += 0.0*ker.at<float>(i_k + kr, j_k + kr);
                     else {
-                        uchar pixval = img.at<uchar>(i + i_k, j + j_k);
+                        float pixval = img.at<float>(i + i_k, j + j_k);
                         res += pixval*ker.at<float>(i_k + kr, j_k + kr);
                     }
                 }
             }
 
-            res = min(255.0f, max(0.0f, res));
-
-            outimg.at<uchar>(i, j) = res;
+            outimg.at<float>(i, j) = res;
         }
     }
 
@@ -244,4 +242,41 @@ Mat apply_laplacian(Mat img) {
     outimg = (outimg/resmax)*255.0;
 
     return outimg;
+}
+
+
+Mat apply_harris(Mat img) {
+
+    // Denoise with Gaussian filter
+    img = apply_gaussian(img, 1.0, 3);
+
+    Mat sobel_x = (Mat_<float>(3, 3) << 
+        -1, 0, 1, 
+        -2, 0, 2, 
+        -1, 0, 1
+    );
+    Mat sobel_y = (Mat_<float>(3, 3) << 
+        1, 2, 1, 
+        0, 0, 0, 
+        -1, -2, -1
+    );
+
+    Mat dx = convolve_gray(img, sobel_x, 3);
+    Mat dy = convolve_gray(img, sobel_y, 3);
+
+    Mat dxx = dx.mul(dx);
+    Mat dyy = dy.mul(dy);
+    Mat dxy = dx.mul(dy);
+
+    dxx = apply_gaussian(dxx, 1.0, 3);
+    dyy = apply_gaussian(dyy, 1.0, 3);
+    dxy = apply_gaussian(dxy, 1.0, 3);
+
+    Mat det = dxx.mul(dyy) - dxy.mul(dxy);
+    Mat trace = dxx + dyy;
+    Mat response = det - 0.04*(trace.mul(trace));
+
+    normalize(response, response, 0, 255, NORM_MINMAX, CV_32F, Mat());
+
+    return response;
 }

@@ -62,6 +62,27 @@ int main(int argc, char* argv[]) {
         Mat gray = rgb2gray(img);
         outimg = apply_laplacian(gray);
     }
+    
+    else if (strcmp(argv[1], "-harris") == 0) {
+        float thresh = stof(argv[4]);
+
+        // Convert to grayscale
+        Mat gray = rgb2gray(img);
+        gray.convertTo(gray, CV_32F);
+
+        // Harris response
+        Mat hr = apply_harris(gray);
+
+        // Thresholding + draw circle
+        for (int y = 0; y < hr.rows; ++y) {
+            for (int x = 0; x < hr.cols; ++x) {
+                if (hr.at<float>(y, x) > thresh)
+                    circle(img, Point(x, y), 2, Scalar(0, 0, 255), 2);
+            }
+        }
+
+        outimg = img;
+    } 
 
     else {
         cout << "Operation not found!\n";
