@@ -42,5 +42,5 @@ ksize=5     # integer kernel size (must be an odd number)
 
 ## **Acknowledgements**
 The testing samples used in this project are products of NASA/ESA [Hubble Space Telescope](https://hubblesite.org/home), Twitter
-user [hitsukuya](https://twitter.com/hitsukuya), miHoYo Co. Ltd. and unknown creator of an Internet meme. All data were used for
+user [hitsukuya](https://twitter.com/hitsukuya), [miHoYo Co., Ltd.](https://hsr.hoyoverse.com/en-us/home), and unknown creator of an Internet [meme](https://www.youtube.com/watch?v=B-O6pWeZ7W0&t=0s). All data were used for
 educational and research purposes.
