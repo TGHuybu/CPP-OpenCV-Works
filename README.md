@@ -23,13 +23,14 @@ $^2$ see file `src/filter.cpp` for detailed implementation
 ## **Usage**
 Compile the program using your choice of environment and invoke the executable. 
 
-Here I present the syntax to run the program in Ubuntu terminal:
+Here I present the Bash syntax to run the program in Ubuntu terminal:
 ```bash
 input="path/to/input/image"
 output="path/to/input/image"
 factor=1.5  # a floating point number
 ksize=5     # integer kernel size (must be an odd number)
 
+# Examples of how to run the program
 ./main -rgb2gray $input $output
 ./main -brightness $input $output $factor
 ./main -contrast $input $output $factor
