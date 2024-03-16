@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
 
     else if (strcmp(argv[1], "-gau") == 0) {
         cout << "Applying Gaussian filter...\n";
-        float sigma = 20;
+        float sigma = 7;
         int ksize = stoi(argv[4]);
         outimg = apply_gaussian(img, sigma, ksize);
     }
