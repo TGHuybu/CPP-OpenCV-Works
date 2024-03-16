@@ -1,4 +1,4 @@
-# **C++ OpenCV Algorihm Implementations**
+# **C++ OpenCV Algorithm Implementations**
 A number of image processing and computer vision algorithms implemented with the help of [OpenCV](https://docs.opencv.org/4.x/index.html).
 The project is part of a series of assignemts in [HCMUS](https://en.wikipedia.org/wiki/Ho_Chi_Minh_City_University_of_Science)' *Computer Vision* course.
 
